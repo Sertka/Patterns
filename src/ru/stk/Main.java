@@ -5,12 +5,18 @@ import com.sun.tools.corba.se.idl.constExpr.Or;
 public class Main {
 
     public static void main(String[] args) {
-    OrderFactory orderFactory = new OrderFactoryImpl();
-        Order o1 = orderFactory.createOrder();
-        Order o2 = orderFactory.createOrder();
+        // Создаем объект-описание
+        OrderDescription od = new OrderDescription();
+        od.setOrderId(1L);
+        od.setUserName("Вася");
 
-        System.out.println(o1.getId());
-        System.out.println(o2.getId());
+        //Создаем адаптер
+        OrderAdapter oa = new OrderAdapter(od);
+        System.out.println(oa.getUserId());
 
+        //Запускаем обновление пользователя в заказе
+        OrderService os = new OrderService();
+        Order o = os.updateOrderUser(oa, 5L);
+        System.out.println(o.getUserId());
     }
 }
